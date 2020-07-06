@@ -30,6 +30,8 @@ public class GameFrame extends Frame {
     private Background bg;
     //兔子
     private Rabbit rabbit;
+    //城堡
+    private Castle[] castles = new Castle[4];
 
     public GameFrame() throws HeadlessException {
         //加载图片资源
@@ -41,6 +43,9 @@ public class GameFrame extends Frame {
         //创建游戏物体对象
         bg = new Background(gameImg.get("grass"), 0, 0);
         rabbit = new Rabbit(gameImg.get("rabbit"), 100, (Config.WINDOW_HEIGHT - 50) / 2);
+        for (int i = 0; i < castles.length; i++) {
+            castles[i] = new Castle(gameImg.get("castle"), 30, 50 + 100 * i);
+        }
     }
 
 
@@ -54,7 +59,7 @@ public class GameFrame extends Frame {
         this.setSize(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         this.setLocation(Config.WINDOW_LOCATION);
 
-        //监听游戏窗口关闭
+        //监听游戏窗口
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -75,13 +80,18 @@ public class GameFrame extends Frame {
     @Override
     public void paint(Graphics g) {
         //绘制背景图片
-        bg.draw(g, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
+        bg.drawSelf(g);
+        //绘制城堡
+        for (Castle c : castles) {
+            c.drawSelf(g);
+        }
         //绘制兔子
         rabbit.drawSelf(g);
     }
 
 
     private Image offScreenImage = null;
+
     /**
      * 双缓冲区的实现
      *

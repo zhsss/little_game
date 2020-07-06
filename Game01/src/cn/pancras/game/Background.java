@@ -18,19 +18,18 @@ public class Background extends GameObject {
     /**
      * 绘制背景图片
      *
-     * @param g      绘制窗口
-     * @param width  窗口的宽度
-     * @param height 窗口的高度
+     * @param g 绘制的窗口
      */
-    public void draw(Graphics g, int width, int height) {
+    @Override
+    public void drawSelf(Graphics g) {
         int imgWidth = img.getWidth(null);
         int imgHeight = img.getHeight(null);
 
         //将背景图片铺满整个窗口
-        for (int i = 0; i <= height / imgHeight; i++) {
-            for (int j = 0; j <= width / imgWidth; j++) {
+        for (int i = 0; i <= Config.WINDOW_HEIGHT / imgHeight; i++) {
+            for (int j = 0; j <= Config.WINDOW_WIDTH / imgWidth; j++) {
                 posX = j * imgWidth;
-                drawSelf(g);
+                g.drawImage(img, posX, posY, null);
             }
             posY = i * imgHeight;
         }
