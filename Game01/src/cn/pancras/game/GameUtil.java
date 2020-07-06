@@ -26,7 +26,10 @@ public class GameUtil {
         BufferedImage bi = null;
         try {
             URL u = GameUtil.class.getResource(path);
-            bi = ImageIO.read(u);
+            if(u == null)
+                System.out.println(path);
+            else
+                bi = ImageIO.read(u);
         } catch (IOException e) {
             e.printStackTrace();
         }
