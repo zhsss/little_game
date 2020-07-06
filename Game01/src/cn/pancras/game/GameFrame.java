@@ -6,6 +6,8 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.HashMap;
@@ -21,7 +23,14 @@ public class GameFrame extends Frame {
     /**
      * 保存程序用到的图片对象
      */
-    private HashMap<String, Image> gameImg = new HashMap<>();
+    static HashMap<String, Image> gameImg = new HashMap<>();
+
+    {
+        //加载图片资源
+        for (Entry<String, String> img : Config.imgPath.entrySet()) {
+            gameImg.put(img.getKey(), GameUtil.getImage((img.getValue())));
+        }
+    }
 
     /**
      * 游戏物体
@@ -34,10 +43,6 @@ public class GameFrame extends Frame {
     private Castle[] castles = new Castle[4];
 
     public GameFrame() throws HeadlessException {
-        //加载图片资源
-        for (Entry<String, String> img : Config.imgPath.entrySet()) {
-            gameImg.put(img.getKey(), GameUtil.getImage((img.getValue())));
-        }
         //@TODO 加载音频资源
 
         //创建游戏物体对象
@@ -74,6 +79,10 @@ public class GameFrame extends Frame {
         //启动键盘监听线程
         this.addKeyListener(new KeyMonitor());
 
+        //启动鼠标监听线程
+        MouseMonitor mouseMonitor = new MouseMonitor();
+        this.addMouseListener(mouseMonitor);//注册后可以识别鼠标的按、松
+        this.addMouseMotionListener(mouseMonitor);//注册后可以识别鼠标的移动、拖拽
         //@TODO 加载音频素材
     }
 
@@ -141,6 +150,17 @@ public class GameFrame extends Frame {
         public void keyReleased(KeyEvent e) {
             rabbit.minusDirection(e);
         }
+    }
+
+    /**
+     * 鼠标监听
+     */
+    class MouseMonitor extends MouseAdapter {
+        @Override
+        public void mouseMoved(MouseEvent e) {
+            rabbit.modifyOrientation(e);
+        }
+
     }
 
     public static void main(String[] args) {

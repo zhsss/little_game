@@ -3,6 +3,8 @@ package cn.pancras.game;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 /**
  * @author pancras
@@ -15,6 +17,10 @@ public class Rabbit extends GameObject {
     private boolean up;
     private boolean down;
 
+
+    //兔子的角度
+    private double degree;
+
     public Rabbit(Image img, int posX, int posY) {
         super(img, posX, posY, 3, img.getWidth(null), img.getHeight(null));
     }
@@ -26,15 +32,19 @@ public class Rabbit extends GameObject {
      */
     public void addDirection(KeyEvent e) {
         switch (e.getKeyCode()) {
+            case KeyEvent.VK_A:
             case KeyEvent.VK_LEFT:
                 left = true;
                 break;
+            case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
                 up = true;
                 break;
+            case KeyEvent.VK_D:
             case KeyEvent.VK_RIGHT:
                 right = true;
                 break;
+            case KeyEvent.VK_S:
             case KeyEvent.VK_DOWN:
                 down = true;
                 break;
@@ -48,24 +58,46 @@ public class Rabbit extends GameObject {
      */
     public void minusDirection(KeyEvent e) {
         switch (e.getKeyCode()) {
+            case KeyEvent.VK_A:
             case KeyEvent.VK_LEFT:
                 left = false;
                 break;
+            case KeyEvent.VK_W:
             case KeyEvent.VK_UP:
                 up = false;
                 break;
+            case KeyEvent.VK_D:
             case KeyEvent.VK_RIGHT:
                 right = false;
                 break;
+            case KeyEvent.VK_S:
             case KeyEvent.VK_DOWN:
                 down = false;
                 break;
         }
     }
 
+    /**
+     * 修改物体朝向
+     */
+    public void modifyOrientation(MouseEvent e) {
+        //鼠标的坐标
+        int mPosX = e.getX();
+        int mPosY = e.getY();
+
+        //兔子中心点的坐标
+        int rPosX = posX + width / 2;
+        int rPosY = posY + height / 2;
+
+        //计算旋转弧度
+        degree = Math.atan2(mPosY - rPosY, mPosX - rPosX);
+    }
+
     @Override
     public void drawSelf(Graphics g) {
-        g.drawImage(img, posX, posY, null);
+        Image rotateImg = GameUtil.rotate((BufferedImage) img, degree);
+        g.drawImage(rotateImg, posX, posY, null);
+
         if (left && posX >= 0) {
             posX -= speed;
         }
@@ -78,5 +110,6 @@ public class Rabbit extends GameObject {
         if (down && posY <= Config.WINDOW_HEIGHT - this.height) {
             posY += speed;
         }
+
     }
 }

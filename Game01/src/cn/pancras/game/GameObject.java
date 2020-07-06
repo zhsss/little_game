@@ -1,10 +1,10 @@
 package cn.pancras.game;
 
-import org.w3c.dom.css.Rect;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Rectangle;
+
 
 /**
  * 游戏物体的父类
@@ -69,4 +69,5 @@ public class GameObject {
     public Rectangle getRect() {
         return new Rectangle(posX, posY, width, height);
     }
+
 }
