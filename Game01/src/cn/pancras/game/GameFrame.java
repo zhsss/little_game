@@ -75,6 +75,9 @@ public class GameFrame extends Frame {
         this.setSize(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
         this.setLocation(Config.WINDOW_LOCATION);
 
+        //播放背景音乐
+        GameUtil.playSound(Config.audioPath.get("moonlight"));
+
         //监听游戏窗口的关闭
         this.addWindowListener(new WindowAdapter() {
             @Override
@@ -126,7 +129,8 @@ public class GameFrame extends Frame {
         for (int i = 0; i < badguys.size(); i++) {
             if (!badguys.get(i).isAlive()) {
                 badguys.remove(i);
-            } else if (badguys.get(i).getPosX() < 100) {
+            } else if (badguys.get(i).getPosX() < 100) {//到达城堡
+                GameUtil.playSound(Config.audioPath.get("explode"));
                 healthValue -= Config.HEALTH_LOSS;
                 if (healthValue < 0)
                     healthValue = 0;
@@ -141,12 +145,13 @@ public class GameFrame extends Frame {
         }
 
         //检测獾是否和弓箭相撞,相撞则清除獾和弓箭
-        for (Arrow arrow : arrows) {
-            Rectangle arrowRect = arrow.getRect();
-            for (Badguy badguy : badguys) {
-                if (badguy.getRect().intersects(arrowRect)) {
-                    arrow.setAlive(false);
-                    badguy.setAlive(false);
+        for (int i = 0; i < arrows.size(); i++) {
+            Rectangle arrowRect = arrows.get(i).getRect();
+            for (int j = 0; j < badguys.size(); j++) {
+                if (badguys.get(j).getRect().intersects(arrowRect)) {
+                    GameUtil.playSound(Config.audioPath.get("enemy"));
+                    arrows.get(i).setAlive(false);
+                    badguys.get(j).setAlive(false);
                 }
             }
         }
@@ -252,6 +257,7 @@ public class GameFrame extends Frame {
 
         @Override
         public void mousePressed(MouseEvent e) {
+            GameUtil.playSound(Config.audioPath.get("shoot"));
             createOneArrow(e);
         }
     }

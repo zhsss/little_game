@@ -1,11 +1,15 @@
 package cn.pancras.game;
 
+import sun.audio.AudioPlayer;
+import sun.audio.AudioStream;
+
 import javax.imageio.ImageIO;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -40,7 +44,22 @@ public class GameUtil {
     }
 
     /**
-     * 旋转角度
+     * 播放指定文件路径的音频
+     *
+     * @param path 音频文件路径
+     */
+    public static void playSound(String path) {
+        try {
+            FileInputStream f = new FileInputStream(GameUtil.class.getResource(path).getFile());
+            AudioStream audio = new AudioStream(f);
+            AudioPlayer.player.start(audio);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 旋转图片角度
      *
      * @param src    源图片
      * @param degree 角度

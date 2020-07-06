@@ -36,6 +36,17 @@ public class Config {
         }
     };
 
+    //音频路径
+    public static final HashMap<String, String> audioPath = new HashMap<String, String>() {
+        {
+            put("enemy", "/resources/audio/enemy.wav");
+            put("explode", "/resources/audio/explode.wav");
+            put("moonlight", "/resources/audio/moonlight.wav");
+            put("shoot", "/resources/audio/shoot.wav");
+
+        }
+    };
+
     //弓箭速度
     public static final int ARROW_SPEED = 5;
 
@@ -46,9 +57,7 @@ public class Config {
     public static final int BADGUY_SPEED = 2;
 
     //生命值损失
-    public static final int HEALTH_LOSS = 60;
-
-    //@TODO 音频路径
+    public static final int HEALTH_LOSS = 5;
 
     //刷新频率
     public static final int FPS = 120;
