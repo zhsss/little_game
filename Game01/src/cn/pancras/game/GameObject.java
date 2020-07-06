@@ -36,7 +36,7 @@ public class GameObject {
         this(img, posX, posY, 0, 0, 0);
     }
 
-    public double getPosX() {
+    public int getPosX() {
         return posX;
     }
 
@@ -44,7 +44,7 @@ public class GameObject {
         this.posX = posX;
     }
 
-    public double getPosY() {
+    public int getPosY() {
         return posY;
     }
 

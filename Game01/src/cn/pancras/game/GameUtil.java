@@ -1,9 +1,10 @@
 package cn.pancras.game;
 
 import javax.imageio.ImageIO;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.RenderingHints;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -39,25 +40,45 @@ public class GameUtil {
     }
 
     /**
-     * 实现物体的旋转
+     * 旋转角度
      *
-     * @param degree 弧度制表示的旋转角度
+     * @param src    源图片
+     * @param degree 角度
+     * @return 目标图片
      */
-    public static BufferedImage rotate(BufferedImage bufferedImage, double degree) {
+    public static BufferedImage rotate(Image src, double degree) {
+        int src_width = src.getWidth(null);
+        int src_height = src.getHeight(null);
+        // calculate the new image size
+        Rectangle rect_des = CalcRotatedSize(new Rectangle(new Dimension(
+                src_width, src_height)), degree);
 
-        int w = bufferedImage.getWidth();
-        int h = bufferedImage.getHeight();
-        int type = bufferedImage.getColorModel().getTransparency();
-        BufferedImage img;
-        Graphics2D graphics2d;
-        (graphics2d = (img = new BufferedImage(w, h, type))
-                .createGraphics()).setRenderingHint(
-                RenderingHints.KEY_INTERPOLATION,
-                RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-        graphics2d.rotate(degree, w / 2, h / 2);
-        graphics2d.drawImage(bufferedImage, 0, 0, null);
-        graphics2d.dispose();
+        BufferedImage res = new BufferedImage(rect_des.width, rect_des.height,
+                ((BufferedImage) src).getColorModel().getTransparency());
+        Graphics2D g2 = res.createGraphics();
+        // transform(这里先平移、再旋转比较方便处理；绘图时会采用这些变化，绘图默认从画布的左上顶点开始绘画，源图片的左上顶点与画布左上顶点对齐，然后开始绘画，修改坐标原点后，绘画对应的画布起始点改变，起到平移的效果；然后旋转图片即可)
+        //平移（原理修改坐标系原点，绘图起点变了，起到了平移的效果，如果作用于旋转，则为旋转中心点）
+        g2.translate((rect_des.width - src_width) / 2, (rect_des.height - src_height) / 2);
+        //旋转（原理transalte(dx,dy)->rotate(radians)->transalte(-dx,-dy);修改坐标系原点后，旋转90度，然后再还原坐标系原点为(0,0),但是整个坐标系已经旋转了相应的度数 ）
+        g2.rotate(degree, src_width / 2.0, src_height / 2.0);
 
-        return img;
+
+        g2.drawImage(src, null, null);
+        return res;
+    }
+
+    /**
+     * 计算转换后目标矩形的宽高
+     *
+     * @param src    源矩形
+     * @param degree 角度
+     * @return 目标矩形
+     */
+    private static Rectangle CalcRotatedSize(Rectangle src, double degree) {
+        double cos = Math.abs(Math.cos(degree));
+        double sin = Math.abs(Math.sin(degree));
+        int des_width = (int) (src.width * cos) + (int) (src.height * sin);
+        int des_height = (int) (src.height * cos) + (int) (src.width * sin);
+        return new java.awt.Rectangle(new Dimension(des_width, des_height));
     }
 }

@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 
 /**
  * @author pancras
@@ -17,12 +16,28 @@ public class Rabbit extends GameObject {
     private boolean up;
     private boolean down;
 
-
     //兔子的角度
     private double degree;
 
-    public Rabbit(Image img, int posX, int posY) {
-        super(img, posX, posY, 3, img.getWidth(null), img.getHeight(null));
+    public double getDegree() {
+        return degree;
+    }
+
+    //兔子的射击坐标
+    private int shootX;
+    private int shootY;
+
+    public int getShootX() {
+        return shootX;
+    }
+
+    public int getShootY() {
+        return shootY;
+    }
+
+
+    public Rabbit(Image img, int posX, int posY, int speed) {
+        super(img, posX, posY, speed, img.getWidth(null), img.getHeight(null));
     }
 
     /**
@@ -95,7 +110,12 @@ public class Rabbit extends GameObject {
 
     @Override
     public void drawSelf(Graphics g) {
-        Image rotateImg = GameUtil.rotate((BufferedImage) img, degree);
+        Image rotateImg = GameUtil.rotate(img, degree);
+        //物体所在矩形的对角线长度
+        double diagonal = Math.sqrt(width * width + height * height);
+        shootX = (int) (posX + width / 2 + Math.cos(degree) * diagonal / 2);
+        shootY = (int) (posY + width / 2 + Math.sin(degree) * diagonal / 2);
+
         g.drawImage(rotateImg, posX, posY, null);
 
         if (left && posX >= 0) {
@@ -104,7 +124,7 @@ public class Rabbit extends GameObject {
         if (right && posX <= Config.WINDOW_WIDTH - this.width) {
             posX += speed;
         }
-        if (up && posY >= 50) {
+        if (up && posY >= 30) {
             posY -= speed;
         }
         if (down && posY <= Config.WINDOW_HEIGHT - this.height) {

@@ -31,10 +31,22 @@ public class Config {
             put("badguy", "/resources/images/badguy.png");
             put("healthbar", "/resources/images/healthbar.png");
             put("health", "/resources/images/health.png");
-            put("gameover", "/resources/images/gameover.png");
+            put("gameover", "/resources/images/gameover.jpg");
             put("youwin", "/resources/images/youwin.png");
         }
     };
+
+    //弓箭速度
+    public static final int ARROW_SPEED = 5;
+
+    //兔子速度
+    public static final int RABBIT_SPEED = 3;
+
+    //獾的速度
+    public static final int BADGUY_SPEED = 2;
+
+    //生命值损失
+    public static final int HEALTH_LOSS = 60;
 
     //@TODO 音频路径
 
