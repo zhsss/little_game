@@ -66,17 +66,16 @@ public class Rabbit extends GameObject {
     @Override
     public void drawSelf(Graphics g) {
         g.drawImage(img, posX, posY, null);
-
-        if (left) {
+        if (left && posX >= 0) {
             posX -= speed;
         }
-        if (right) {
+        if (right && posX <= Config.WINDOW_WIDTH - this.width) {
             posX += speed;
         }
-        if (up) {
+        if (up && posY >= 50) {
             posY -= speed;
         }
-        if (down) {
+        if (down && posY <= Config.WINDOW_HEIGHT - this.height) {
             posY += speed;
         }
     }
