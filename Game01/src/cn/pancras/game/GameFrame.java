@@ -107,7 +107,6 @@ public class GameFrame extends Frame {
         arrows.add(new Arrow(gameImg.get("arrow"), rabbit.getShootX(), rabbit.getShootY(), Config.ARROW_SPEED, rabbit.getDegree()));
     }
 
-    int random;
 
     /**
      * 创建獾
