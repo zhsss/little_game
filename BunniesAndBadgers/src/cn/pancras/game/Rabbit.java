@@ -18,14 +18,17 @@ public class Rabbit extends GameObject {
 
     //兔子的角度
     private double degree;
+    //兔子的射击坐标
+    private int shootX;
+    private int shootY;
+
+    public Rabbit(Image img, int posX, int posY, int speed) {
+        super(img, posX, posY, speed, img.getWidth(null), img.getHeight(null));
+    }
 
     public double getDegree() {
         return degree;
     }
-
-    //兔子的射击坐标
-    private int shootX;
-    private int shootY;
 
     public int getShootX() {
         return shootX;
@@ -33,11 +36,6 @@ public class Rabbit extends GameObject {
 
     public int getShootY() {
         return shootY;
-    }
-
-
-    public Rabbit(Image img, int posX, int posY, int speed) {
-        super(img, posX, posY, speed, img.getWidth(null), img.getHeight(null));
     }
 
     /**

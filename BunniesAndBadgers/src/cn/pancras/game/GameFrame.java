@@ -56,6 +56,8 @@ public class GameFrame extends Frame {
     private ArrayList<Badguy> badguys = new ArrayList<>();
     //生命条
     private HealthBar healthBar = new HealthBar(gameImg.get("healthbar"), 20, 40);
+    private Image offScreenImage = null;
+
 
     public GameFrame() throws HeadlessException {
         //创建游戏物体对象
@@ -64,6 +66,10 @@ public class GameFrame extends Frame {
         }
     }
 
+    public static void main(String[] args) {
+        GameFrame frame = new GameFrame();
+        frame.initGame();
+    }
 
     /**
      * 初始化游戏
@@ -106,7 +112,6 @@ public class GameFrame extends Frame {
     private void createOneArrow(MouseEvent e) {
         arrows.add(new Arrow(gameImg.get("arrow"), rabbit.getShootX(), rabbit.getShootY(), Config.ARROW_SPEED, rabbit.getDegree()));
     }
-
 
     /**
      * 创建獾
@@ -184,8 +189,6 @@ public class GameFrame extends Frame {
 
     }
 
-    private Image offScreenImage = null;
-
     /**
      * 双缓冲区的实现
      *
@@ -259,10 +262,5 @@ public class GameFrame extends Frame {
             GameUtil.playSound(Config.audioPath.get("shoot"));
             createOneArrow(e);
         }
-    }
-
-    public static void main(String[] args) {
-        GameFrame frame = new GameFrame();
-        frame.initGame();
     }
 }

@@ -10,6 +10,11 @@ import java.awt.event.WindowEvent;
  */
 public class GameFrame extends Frame {
 
+    public static void main(String[] args) {
+        GameFrame gameFrame = new GameFrame();
+        gameFrame.initGame();
+    }
+
     public void initGame() {
         //设置窗口
         setTitle("拼图游戏");
@@ -27,10 +32,5 @@ public class GameFrame extends Frame {
                 System.exit(0);
             }
         });
-    }
-
-    public static void main(String[] args) {
-        GameFrame gameFrame = new GameFrame();
-        gameFrame.initGame();
     }
 }

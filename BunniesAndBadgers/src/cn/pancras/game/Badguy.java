@@ -10,17 +10,17 @@ import java.awt.Image;
 public class Badguy extends GameObject {
     boolean alive;
 
+    public Badguy(Image img, int posX, int posY, int speed) {
+        super(img, posX, posY, speed, img.getWidth(null), img.getHeight(null));
+        alive = true;
+    }
+
     public boolean isAlive() {
         return alive;
     }
 
     public void setAlive(boolean alive) {
         this.alive = alive;
-    }
-
-    public Badguy(Image img, int posX, int posY, int speed) {
-        super(img, posX, posY, speed, img.getWidth(null), img.getHeight(null));
-        alive = true;
     }
 
     @Override

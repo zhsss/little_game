@@ -12,19 +12,19 @@ public class Arrow extends GameObject {
     //弓箭的飞行方向
     private double degree;
 
+    public Arrow(Image img, int posX, int posY, int speed, double degree) {
+        super(img, posX, posY, speed, img.getWidth(null), img.getHeight(null));
+        this.degree = degree;
+        this.alive = true;
+        this.img = GameUtil.rotate(img, degree);
+    }
+
     public boolean isAlive() {
         return alive;
     }
 
     public void setAlive(boolean alive) {
         this.alive = alive;
-    }
-
-    public Arrow(Image img, int posX, int posY, int speed, double degree) {
-        super(img, posX, posY, speed, img.getWidth(null), img.getHeight(null));
-        this.degree = degree;
-        this.alive = true;
-        this.img = GameUtil.rotate(img, degree);
     }
 
     @Override

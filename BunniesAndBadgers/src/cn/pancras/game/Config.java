@@ -10,17 +10,9 @@ import java.util.HashMap;
  * @version 1.0
  */
 public class Config {
-    //显示器大小
-    private static final int SCREEN_WIDTH = 1920;
-    private static final int SCREEN_HEIGHT = 1080;
-
     //游戏窗口大小
     public static final int WINDOW_WIDTH = 640;
     public static final int WINDOW_HEIGHT = 480;
-
-    //游戏窗口位置，默认在屏幕中央
-    public static final Point WINDOW_LOCATION = new Point((SCREEN_WIDTH - WINDOW_WIDTH) / 2, (SCREEN_HEIGHT - WINDOW_HEIGHT) / 2);
-
     //图片路径
     public static final HashMap<String, String> imgPath = new HashMap<String, String>() {
         {
@@ -35,7 +27,6 @@ public class Config {
             put("youwin", "/resources/images/youwin.png");
         }
     };
-
     //音频路径
     public static final HashMap<String, String> audioPath = new HashMap<String, String>() {
         {
@@ -46,19 +37,19 @@ public class Config {
 
         }
     };
-
     //弓箭速度
     public static final int ARROW_SPEED = 5;
-
     //兔子速度
     public static final int RABBIT_SPEED = 3;
-
     //獾的速度
     public static final int BADGUY_SPEED = 2;
-
     //生命值损失
     public static final int HEALTH_LOSS = 5;
-
     //刷新频率
     public static final int FPS = 120;
+    //显示器大小
+    private static final int SCREEN_WIDTH = 1920;
+    private static final int SCREEN_HEIGHT = 1080;
+    //游戏窗口位置，默认在屏幕中央
+    public static final Point WINDOW_LOCATION = new Point((SCREEN_WIDTH - WINDOW_WIDTH) / 2, (SCREEN_HEIGHT - WINDOW_HEIGHT) / 2);
 }
